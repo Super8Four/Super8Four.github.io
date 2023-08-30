@@ -9,10 +9,14 @@
 <body>
 
   <div class="container mt-5">
-    <h1>Super8Four's GitHub Profile</h1>
-    <div id="profile"></div>
-    <h2>Repositories</h2>
-    <div id="repos"></div>
+    <h1 class="text-center mb-5">Super8Four's GitHub Profile</h1>
+    <div class="row">
+      <div class="col-md-4" id="profile"></div>
+      <div class="col-md-8">
+        <h2>Repositories <span class="badge bg-primary" id="repoCount"></span></h2>
+        <div id="repos" class="row"></div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -21,7 +25,7 @@
       const data = await response.json();
       
       const profileHTML = `
-        <div class="card" style="width: 18rem;">
+        <div class="card">
           <img src="${data.avatar_url}" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">${data.name || data.login}</h5>
@@ -38,11 +42,22 @@
       const response = await fetch('https://api.github.com/users/Super8Four/repos');
       const repos = await response.json();
       
-      let reposHTML = '<ul class="list-group">';
+      document.getElementById('repoCount').innerText = repos.length;
+
+      let reposHTML = '';
       repos.forEach(repo => {
-        reposHTML += `<li class="list-group-item"><a href="${repo.html_url}" target="_blank">${repo.name}</a></li>`;
+        reposHTML += `
+          <div class="col-md-6 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${repo.name}</h5>
+                <p class="card-text">${repo.description || 'No description available'}</p>
+                <a href="${repo.html_url}" class="btn btn-secondary" target="_blank">View Repo</a>
+              </div>
+            </div>
+          </div>
+        `;
       });
-      reposHTML += '</ul>';
 
       document.getElementById('repos').innerHTML = reposHTML;
     }
