@@ -22,4 +22,4 @@ This is a universal GitHub Profile Page that dynamically fetches and displays Gi
 
 ## Author
 
-[Your GitHub Username]
+[Super8Four]
